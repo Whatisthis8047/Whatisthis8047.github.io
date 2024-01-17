@@ -20,6 +20,15 @@
 &lt;p&gt;why is this not showing on the blog post&lt;/p&gt;
 </description>
         </item>
+        <item>
+        <title>My First Post</title>
+        <link>https://example.org/posts/my-first-post/</link>
+        <pubDate>Wed, 17 Jan 2024 15:34:20 +0900</pubDate>
+        
+        <guid>https://example.org/posts/my-first-post/</guid>
+        <description>&lt;h1 id=&#34;this-is-my-first-blog-posting&#34;&gt;This is my first blog posting&lt;/h1&gt;
+</description>
+        </item>
         
     </channel>
 </rss>
