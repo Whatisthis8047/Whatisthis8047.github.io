@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>My New Hugo Site</title>
-        <link>https://example.org/</link>
-        <description>Recent content on My New Hugo Site</description>
+        <title>Posts on My New Hugo Site</title>
+        <link>https://example.org/posts/</link>
+        <description>Recent content in Posts on My New Hugo Site</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 17 Jan 2024 15:34:20 +0900</lastBuildDate><atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 17 Jan 2024 15:34:20 +0900</lastBuildDate><atom:link href="https://example.org/posts/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>My First Post</title>
-        <link>https://example.org/post/my-first-post/</link>
+        <link>https://example.org/posts/my-first-post/</link>
         <pubDate>Wed, 17 Jan 2024 15:34:20 +0900</pubDate>
         
-        <guid>https://example.org/post/my-first-post/</guid>
+        <guid>https://example.org/posts/my-first-post/</guid>
         <description>&lt;h1 id=&#34;this-is-my-first-blog-posting&#34;&gt;This is my first blog posting&lt;/h1&gt;
 &lt;h2 id=&#34;heading-2&#34;&gt;heading 2&lt;/h2&gt;
 &lt;h3 id=&#34;heading-3&#34;&gt;heading 3&lt;/h3&gt;
 &lt;h4 id=&#34;heading-4&#34;&gt;heading 4&lt;/h4&gt;
 &lt;h5 id=&#34;heading-5&#34;&gt;heading 5&lt;/h5&gt;
-&lt;p&gt;why is this not showing on the blog post&lt;/p&gt;
 </description>
         </item>
         
