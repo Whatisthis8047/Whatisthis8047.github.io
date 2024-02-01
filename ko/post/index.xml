@@ -5,7 +5,110 @@
         <link>https://whatisthis8047.github.io/ko/post/</link>
         <description>Recent content in Posts on 프로젝트 문서화</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>ko-KR</language><atom:link href="https://whatisthis8047.github.io/ko/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>ko-KR</language>
+        <lastBuildDate>Thu, 25 Jan 2024 21:15:26 +0900</lastBuildDate><atom:link href="https://whatisthis8047.github.io/ko/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>LeetCode_Coin_Change</title>
+        <link>https://whatisthis8047.github.io/ko/post/leetcode_322/</link>
+        <pubDate>Thu, 25 Jan 2024 21:15:26 +0900</pubDate>
+        
+        <guid>https://whatisthis8047.github.io/ko/post/leetcode_322/</guid>
+        <description>&lt;h1 id=&#34;coin-change-동전-계산하기-문제로-동적-계획법-이해하기&#34;&gt;Coin Change (동전 계산하기) 문제로 동적 계획법 이해하기&lt;/h1&gt;
+&lt;h2 id=&#34;리트코드-322번&#34;&gt;리트코드 322번&lt;/h2&gt;
+&lt;p&gt;목차&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#%eb%ac%b8%ec%a0%9c&#34; &gt;문제 소개&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#%ec%a0%91%ea%b7%bc%eb%b2%95&#34; &gt;접근법&lt;/a&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#DP&#34; &gt;동적 계획법&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#Optimize&#34; &gt;동적 계획법 개선하기&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;해당 PS 풀이는 도서 &lt;!-- raw HTML omitted --&gt;&lt;a class=&#34;link&#34; href=&#34;https://product.kyobobook.co.kr/detail/S000061898577&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;코딩 인터뷰를 위한 알고리즘 치트시트, 푸둥라이 지음&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;을 참고하며 진행중임을 밝힙니다.&lt;/p&gt;
+&lt;p&gt;##문제
+리트코드 원본 문제:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.&lt;br&gt;
+Return &lt;strong&gt;the fewest number of coins&lt;/strong&gt; that you need to make up that amount. If that amount of money &lt;strong&gt;cannot&lt;/strong&gt; be made up by any combination of the coins, &lt;strong&gt;return -1&lt;/strong&gt;. You may assume that you have an infinite number of each kind of coin.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이를 한국어로 번역해보자면,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;입력으로 &amp;ldquo;단위가 다른 동전 종류(어레이)&amp;ldquo;와 &amp;ldquo;동전들을 가지고 만들 총 금액&amp;rdquo; 두가지를 받는다.&lt;br&gt;
+이때, 총 금액 값을 만드는 &lt;strong&gt;가장 적은 동전의 갯수를 반환&lt;/strong&gt;하라. 만약 가지고 있는 동전들로 총 금액을 만들 수 없는 경우에는 -1을 반환하며, 각 동전의 개수는 항상 총액을 만들 수 있을 만큼 충분히 많다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이 문제는 책 초반에 다양한 PS 문제들의 기본적인 접근법이 되는 프레임들을 안내해주는 1.2장에서 소개 되었다. 나는 알고리즘 문제를 풀어보는 경험이 아에 없다시피 하기 때문에 쉽게 쉽게 설명하고 넘어가는 부분에도 한참 시간을 보내며 어떻게 작동하는지 머릿속에 그려봐야 했다.&lt;/p&gt;
+&lt;p&gt;책에서 제시하는 키워드는 &lt;strong&gt;DP, 동적 계획법&lt;/strong&gt;으로의 접근이었다.&lt;/p&gt;
+&lt;h2 id=&#34;접근법&#34;&gt;접근법&lt;/h2&gt;
+&lt;h3 id=&#34;동적-계획법-dynamic-programming-a-iddpa&#34;&gt;동적 계획법 [Dynamic Programming] &lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/h3&gt;
+&lt;p&gt;동적 계획법의 개념은 &lt;strong&gt;어렵고 복잡한 문제를 간단한 여러개의 작은 문제들로 나누어 풀이해내는 방법&lt;/strong&gt;이다. 단어 자체가 주는 압박감(?)을 뒤로하고 개념만 들어보면 참 간단하다.&lt;/p&gt;
+&lt;p&gt;너무 간단한 개념 설명을 조금 보충할 필요가 있을 것 같아서 위키 설명을 참조해보았다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(동적 계획법이란) 주어진 문제를 풀기 위해서, 문제를 여러 개의 하위 문제(subproblem)로 나누어 푼 다음, 그것을 결합하여 최종적인 목적에 도달하는 것이다. 각 하위 문제의 해결을 계산한 뒤, 그 해결책을 저장하여 후에 같은 하위 문제가 나왔을 경우 그것을 간단하게 해결할 수 있다. 이러한 방법으로 동적 계획법은 계산 횟수를 줄일 수 있다. 특히 이 방법은 하위 문제의 수가 기하급수적으로 증가할 때 유용하다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;자, 그럼 개념을 통해서 동전 계산하기 문제를 보면 주어진 큰 문제를 작은 여러개의 하위 문제로 나눌 필요가 있다. 정말 단순하게 떠오르는 접근법으론 총 금액에서 가지고 있는 종류의 동전을 하나씩 빼보면서 정확히 0을 맞추어 낼 수 있는지를 확인하면 될 것 같다. 그렇다면 여기서 &lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&amp;lsquo;작은 문제&amp;rsquo;는 &amp;lsquo;총 금액에서 종류별 금액을 빼보기&amp;rsquo;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;가 되겠다.
+그럼 총 금액을 인자로 받아 가지고 있는 동전의 종류마다 하나씩 빼는 함수를 만들어보자!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python3&#34; data-lang=&#34;python3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;dp&lt;/span&gt;(n):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;여기 하위 문제를 푸는 함수 dp(n)을 만들었다.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;남은 금액 n을 인자로 받고, 가지고 있는 종류의 동전(coin)마다 하나씩 뺀 뒤에 재귀적으로 다시 dp(n - coin)을 넣어준다. 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; coin &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; coins:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; min(res, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; dp(n &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; coin))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; result
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;위 함수는 동전을 뺐을 때 금액이 0이 되는 경우나 음수가 되는 예외적인 경우를 아직 포함하지 않은 상태로 정말 기초적인 아이디어만 제시한 상태다.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python3&#34; data-lang=&#34;python3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; min(result, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; dp(n &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; coin))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;위 코드가 핵심인데, 재귀적으로 dp(n - coin)을 부름으로써 coin을 빼는 모든 경우를 계산한다. 그 뒤엔 이를 각각 지금의 result값과 비교해서 더 적은 값(최소 값)을 돌려주도록 설계했다. (이 짧은 부분을 이해하는데 한참이 걸린 것 같다.)&lt;/p&gt;
+&lt;p&gt;이제 해당 문제를 실제로 풀이하기 위해 코드를 수정해보자. Solution 클래스와 coinChange 함수는 LeetCode에서 제공하는 기본 템플릿이며, 문제를 풀기 위해서는 이 내부에 입력값과 출력값을 고려하여 코드를 작성하면 된다.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python3&#34; data-lang=&#34;python3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Solution&lt;/span&gt;(object):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;coinChange&lt;/span&gt;(self, coins, amount):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        :type coins: List[int]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        :type amount: int
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        :rtype: int
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;dp&lt;/span&gt;(n): 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# 가장 기본적인 케이스(base case)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# 최솟값을 구할 때 비교하기 위해 가장 큰 값인 양의 무한대로 초기화 ()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; float(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;INF&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; coin &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; coins:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                subproblem &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; dp(n &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; coin)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# 하위 문제의 답이 없을 시 -1을 리턴하므로 건너뛰기&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; subproblem &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; min(result, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; subproblem)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; result &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; result &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; float(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;INF&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; dp(amount)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;문제 해결을 위해서 몇가지를 수정하긴 했지만, 핵심 구조는 동일하다! 개인적으로 바로 이해가 안됬던 부분은 &lt;code&gt;result = float(&#39;INF&#39;)&lt;/code&gt; 이 부분이었는데, 곰곰히 생각해보니 이해가 된다. 함수의 핵심 구조는 &lt;code&gt;result = min(result, 1 + dp(n - coin))&lt;/code&gt; 이고 여기서 &lt;code&gt;min()&lt;/code&gt;을 이용하여 최솟값을 누적하여 구해내고 있다. 이렇게 되면 처음 초기화 한 result의 값이 &lt;code&gt;min()&lt;/code&gt;에 들어갔을 때 나올 수 있는 최솟값 보다 항상 커야만 하며, 그러므로 정의할 수 있는 가장 큰 값인 양의 무한대로 초기화를 해야 어떠한 예외없이 result의 초기값이 항상 크다는걸 보장할 수 있다.&lt;/p&gt;
+&lt;h3 id=&#34;동적-계획법-개선하기-a-idoptimizea&#34;&gt;동적 계획법 개선하기 &lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/h3&gt;
+&lt;p&gt;위의 방식은 단순 재귀함수를 이용한 접근으로 동적계획법을 잘 이용하긴 했지만 같은 게산을 중복으로 하게 되는 경우가 있다. 예를 들어 &lt;code&gt;coins = [2,3,5], amount = 17&lt;/code&gt; 이 입력되었을 때, 위 함수는 &lt;code&gt;17 - 5 - 5 - 2 - 5 = 0&lt;/code&gt; 와&lt;code&gt;17 - 5 - 2 - 5 - 5 = 0&lt;/code&gt;를 계산하는 경우애 첫 &lt;code&gt;dp(17 - 5)&lt;/code&gt; 값을 매번 일일히 계산하고 작은 값을 반환하게 된다. 하지만 만약 이 &lt;code&gt;dp(12)&lt;/code&gt; 값을 어딘가 저장해두고 다시 찾을 때 반환한다면 중복 없이 훨씬 빠르게 문제를 끝낼 수 있게 된다! 저장해두는 장소를 보통 &lt;strong&gt;메모&lt;/strong&gt;라고 선언 한다. 아래는 메모를 이용한 동적 계획법 풀이이다.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python3&#34; data-lang=&#34;python3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Solution&lt;/span&gt;(object):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;coinChange&lt;/span&gt;(self, coins, amount):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        :type coins: List[int]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        :type amount: int
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        :rtype: int
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        memo &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;dp&lt;/span&gt;(n):  &lt;span style=&#34;color:#75715e&#34;&gt;#need to find base case for result&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; memo: &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; memo[n] &lt;span style=&#34;color:#75715e&#34;&gt;# 메모에 값이 있으면 바로 반환&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; float(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;INF&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; coin &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; coins:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                sub &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; dp(n &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; coin)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; sub &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; min(result, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; sub)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            memo[n] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; result &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; result &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; float(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;INF&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; memo[n]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; dp(amount)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;핵심 아이디어는 같고, &lt;code&gt;memo&lt;/code&gt;를 딕셔너리 형태로 선언하고 메모 값을 먼저 확인하여 중복된 계산을 바로 피할 수 있게 되었다!&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title></title>
         <link>https://whatisthis8047.github.io/ko/post/about/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
