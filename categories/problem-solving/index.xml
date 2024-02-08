@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>프로젝트 문서화</title>
-        <link>https://whatisthis8047.github.io/</link>
-        <description>Recent content on 프로젝트 문서화</description>
+        <title>Problem Solving on 프로젝트 문서화</title>
+        <link>https://whatisthis8047.github.io/categories/problem-solving/</link>
+        <description>Recent content in Problem Solving on 프로젝트 문서화</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ko-KR</language>
-        <lastBuildDate>Thu, 25 Jan 2024 21:15:26 +0900</lastBuildDate><atom:link href="https://whatisthis8047.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 25 Jan 2024 21:15:26 +0900</lastBuildDate><atom:link href="https://whatisthis8047.github.io/categories/problem-solving/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>[LeetCode] 124. Binary Tree Maximum Path Sum</title>
         <link>https://whatisthis8047.github.io/post/leetcode_124/</link>
         <pubDate>Thu, 25 Jan 2024 21:15:26 +0900</pubDate>
@@ -108,22 +108,6 @@ Return &lt;strong&gt;the fewest number of coins&lt;/strong&gt; that you need to 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; dp(amount)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;memo&lt;/code&gt;를 딕셔너리 형태로 선언하고 메모 값을 먼저 확인하여 중복된 계산을 바로 피할 수 있게 되었다!&lt;/p&gt;
 </description>
-        </item>
-        <item>
-        <title>Archives</title>
-        <link>https://whatisthis8047.github.io/archives/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://whatisthis8047.github.io/archives/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Search</title>
-        <link>https://whatisthis8047.github.io/search/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://whatisthis8047.github.io/search/</guid>
-        <description></description>
         </item>
         
     </channel>

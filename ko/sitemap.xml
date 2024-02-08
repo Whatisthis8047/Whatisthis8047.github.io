@@ -27,13 +27,13 @@
     <loc>https://whatisthis8047.github.io/tags/cs/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
-    <loc>https://whatisthis8047.github.io/categories/development/</loc>
-    <lastmod>2024-01-25T21:15:26+09:00</lastmod>
-  </url><url>
     <loc>https://whatisthis8047.github.io/tags/leetcode/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
     <loc>https://whatisthis8047.github.io/post/</loc>
+    <lastmod>2024-01-25T21:15:26+09:00</lastmod>
+  </url><url>
+    <loc>https://whatisthis8047.github.io/categories/problem-solving/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
     <loc>https://whatisthis8047.github.io/tags/</loc>
@@ -72,6 +72,18 @@
                 rel="alternate"
                 hreflang="ko-KR"
                 href="https://whatisthis8047.github.io/archives/"
+                />
+  </url><url>
+    <loc>https://whatisthis8047.github.io/search/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-US"
+                href="https://whatisthis8047.github.io/en/search/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko-KR"
+                href="https://whatisthis8047.github.io/search/"
                 />
   </url>
 </urlset>

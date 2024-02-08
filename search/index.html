@@ -2,21 +2,21 @@
 <html lang="ko-KR" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''>
-<title>Archives</title>
+<title>Search</title>
 
-<link rel='canonical' href='https://whatisthis8047.github.io/archives/'>
+<link rel='canonical' href='https://whatisthis8047.github.io/search/'>
 
-<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Archives'>
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='Search'>
 <meta property='og:description' content=''>
-<meta property='og:url' content='https://whatisthis8047.github.io/archives/'>
+<meta property='og:url' content='https://whatisthis8047.github.io/search/'>
 <meta property='og:site_name' content='프로젝트 문서화'>
 <meta property='og:type' content='article'><meta property='article:section' content='' />
-<meta name="twitter:title" content="Archives">
+<meta name="twitter:title" content="Search">
 <meta name="twitter:description" content="">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
-    <body class="template-archives">
+    <body class="template-search">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
@@ -125,66 +125,34 @@
 </aside>
 
             <main class="main full-width">
-    <header>
-        <h2 class="section-title">Categories</h2>
-        <div class="subsection-list">
-            <div class="article-list--tile">
-                
-                    
-<article class="">
-    <a href="/categories/problem-solving/">
-        
-        
+<form action="/search/" class="search-form">
+    <p>
+        <label>검색</label>
+        <input name="keyword" placeholder="검색어를 입력하세요..." />
+    </p>
 
-        <div class="article-details">
-            <h2 class="article-title">Problem Solving</h2>
-        </div>
-    </a>
-</article>
+    <button title="검색">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
 
-                
-            </div>
-        </div>
-        
-    </header>
 
-    
-    
-    
 
-    
-    
-    <div class="archives-group" id="2024">
-        <h2 class="archives-date section-title"><a href="/archives/#2024">2024</a></h2>
-        <div class="article-list--compact">
-            
-                <article>
-    <a href="/post/leetcode_322/">
-        <div class="article-details">
-            <h2 class="article-title">[LeetCode] 322. Coin Change</h2>
-            <footer class="article-time">
-                <time datetime='2024-01-25T21:15:26&#43;09:00'>Jan 25, 2024</time>
-            </footer>
-        </div>
-    </a>
-</article>
-            
-                <article>
-    <a href="/post/leetcode_124/">
-        <div class="article-details">
-            <h2 class="article-title">[LeetCode] 124. Binary Tree Maximum Path Sum</h2>
-            <footer class="article-time">
-                <time datetime='2024-01-25T21:15:26&#43;09:00'>Jan 25, 2024</time>
-            </footer>
-        </div>
-    </a>
-</article>
-            
-        </div>
-    </div>
-    
+    </button>
+</form>
 
-    <footer class="site-footer">
+<div class="search-result">
+    <h3 class="search-result--title section-title"></h3>
+    <div class="search-result--list article-list--compact"></div>
+</div>
+
+<script>
+    window.searchResultTitleTemplate = "#PAGES_COUNT 페이지 (#TIME_SECONDS 초)"
+</script><script type="text/javascript" src="/ts/search.js" defer></script>
+
+<footer class="site-footer">
     <section class="copyright">
         &copy; 
         
