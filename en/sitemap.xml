@@ -6,7 +6,7 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="ko-KR"
-                href="https://whatisthis8047.github.io/archives/"
+                href="https://whatisthis8047.github.io/ko/archives/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -18,7 +18,7 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="ko-KR"
-                href="https://whatisthis8047.github.io/categories/"
+                href="https://whatisthis8047.github.io/ko/categories/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -26,28 +26,40 @@
                 href="https://whatisthis8047.github.io/en/categories/"
                 />
   </url><url>
-    <loc>https://whatisthis8047.github.io/en/</loc>
+    <loc>https://whatisthis8047.github.io/en/search/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko-KR"
-                href="https://whatisthis8047.github.io/"
+                href="https://whatisthis8047.github.io/ko/search/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-US"
-                href="https://whatisthis8047.github.io/en/"
+                href="https://whatisthis8047.github.io/en/search/"
                 />
   </url><url>
     <loc>https://whatisthis8047.github.io/en/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko-KR"
-                href="https://whatisthis8047.github.io/tags/"
+                href="https://whatisthis8047.github.io/ko/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-US"
                 href="https://whatisthis8047.github.io/en/tags/"
+                />
+  </url><url>
+    <loc>https://whatisthis8047.github.io/en/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko-KR"
+                href="https://whatisthis8047.github.io/ko/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-US"
+                href="https://whatisthis8047.github.io/en/"
                 />
   </url>
 </urlset>

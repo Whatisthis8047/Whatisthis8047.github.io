@@ -2,16 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://whatisthis8047.github.io/post/leetcode_124/</loc>
+    <loc>https://whatisthis8047.github.io/ko/post/leetcode_124/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
-    <loc>https://whatisthis8047.github.io/post/leetcode_322/</loc>
+    <loc>https://whatisthis8047.github.io/ko/post/leetcode_322/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
-    <loc>https://whatisthis8047.github.io/tags/algorithm/</loc>
+    <loc>https://whatisthis8047.github.io/ko/tags/algorithm/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
-    <loc>https://whatisthis8047.github.io/categories/</loc>
+    <loc>https://whatisthis8047.github.io/ko/categories/algorithm/</loc>
+    <lastmod>2024-01-25T21:15:26+09:00</lastmod>
+  </url><url>
+    <loc>https://whatisthis8047.github.io/ko/categories/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
@@ -21,22 +24,22 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="ko-KR"
-                href="https://whatisthis8047.github.io/categories/"
+                href="https://whatisthis8047.github.io/ko/categories/"
                 />
   </url><url>
-    <loc>https://whatisthis8047.github.io/tags/cs/</loc>
+    <loc>https://whatisthis8047.github.io/ko/tags/cs/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
-    <loc>https://whatisthis8047.github.io/categories/development/</loc>
+    <loc>https://whatisthis8047.github.io/ko/tags/leetcode/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
-    <loc>https://whatisthis8047.github.io/tags/leetcode/</loc>
+    <loc>https://whatisthis8047.github.io/ko/post/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
-    <loc>https://whatisthis8047.github.io/post/</loc>
+    <loc>https://whatisthis8047.github.io/ko/categories/problem-solving/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
   </url><url>
-    <loc>https://whatisthis8047.github.io/tags/</loc>
+    <loc>https://whatisthis8047.github.io/ko/tags/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
@@ -46,10 +49,10 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="ko-KR"
-                href="https://whatisthis8047.github.io/tags/"
+                href="https://whatisthis8047.github.io/ko/tags/"
                 />
   </url><url>
-    <loc>https://whatisthis8047.github.io/</loc>
+    <loc>https://whatisthis8047.github.io/ko/</loc>
     <lastmod>2024-01-25T21:15:26+09:00</lastmod>
     <xhtml:link
                 rel="alternate"
@@ -59,10 +62,10 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="ko-KR"
-                href="https://whatisthis8047.github.io/"
+                href="https://whatisthis8047.github.io/ko/"
                 />
   </url><url>
-    <loc>https://whatisthis8047.github.io/archives/</loc>
+    <loc>https://whatisthis8047.github.io/ko/archives/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-US"
@@ -71,7 +74,19 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="ko-KR"
-                href="https://whatisthis8047.github.io/archives/"
+                href="https://whatisthis8047.github.io/ko/archives/"
+                />
+  </url><url>
+    <loc>https://whatisthis8047.github.io/ko/search/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-US"
+                href="https://whatisthis8047.github.io/en/search/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko-KR"
+                href="https://whatisthis8047.github.io/ko/search/"
                 />
   </url>
 </urlset>
