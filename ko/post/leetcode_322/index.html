@@ -247,15 +247,15 @@
 
     <div class="tagCloud-tags">
         
-            <a href="/ko/tags/algorithm/" class="font_size_2">
+            <a href="/ko/tags/algorithm/" class="font_size_3">
                 algorithm
             </a>
         
-            <a href="/ko/tags/cs/" class="font_size_2">
+            <a href="/ko/tags/cs/" class="font_size_3">
                 CS
             </a>
         
-            <a href="/ko/tags/leetcode/" class="font_size_2">
+            <a href="/ko/tags/leetcode/" class="font_size_3">
                 leetcode
             </a>
         
@@ -265,6 +265,10 @@
         
             <a href="/ko/tags/deeplearning/" class="font_size_1">
                 deeplearning
+            </a>
+        
+            <a href="/ko/tags/dp/" class="font_size_1">
+                DP
             </a>
         
     </div>
@@ -361,33 +365,33 @@ Return <strong>the fewest number of coins</strong> that you need to make up that
 </blockquote>
 <p>이를 한국어로 해석해보자면,</p>
 <blockquote>
-<p>입력으로 &ldquo;단위가 다른 동전 종류(어레이)&ldquo;와 &ldquo;동전들을 가지고 만들 총 금액&rdquo; 두가지를 받는다.
-이때, 총 금액 값을 만드는 <strong>가장 적은 동전의 갯수를 반환</strong>하라. 만약 가지고 있는 동전들로 총 금액을 만들 수 없는 경우에는 -1을 반환하며, 각 동전의 개수는 항상 총액을 만들 수 있을 만큼 충분히 많다.</p>
+<p>입력으로 &ldquo;단위가 다른 동전 종류(어레이)&ldquo;와 &ldquo;동전들을 가지고 만들 총 금액&rdquo; 두가지를 받습니다.
+이때, 총 금액 값을 만드는 <strong>가장 적은 동전의 갯수를 반환</strong>하십시오. 만약 가지고 있는 동전들로 총 금액을 만들 수 없는 경우에는 -1을 반환하며, 각 동전의 개수는 항상 총액을 만들 수 있을 만큼 충분히 많다고 가정합니다.</p>
 </blockquote>
-<p>이 문제는 책 초반에 다양한 PS 문제들의 기본적인 접근법이 되는 프레임들을 안내해주는 1.2장에서 소개 되었다. 나는 알고리즘 문제를 풀어보는 경험이 아에 없다시피 하기 때문에 쉽게 쉽게 설명하고 넘어가는 부분에도 한참 시간을 보내며 어떻게 작동하는지 머릿속에 그려봐야 했다.</p>
-<p>책에서 제시하는 키워드는 <strong>DP, 동적 계획법</strong>으로의 접근이었다.</p>
+<p>이 문제는 책 초반에 다양한 PS 문제들의 기본적인 접근법이 되는 프레임들을 안내해주는 1.2장에서 소개 되었습니다. 저는 아직 알고리즘 문제를 풀어보는 경험이 아에 없다시피 하기 때문에 쉽게 설명하고 넘어가는 부분에도 오랜시간을 보내며 어떻게 작동하는지 그려보며 따라가 보았습니다!</p>
+<p>책에서 제시하는 키워드는 <strong>DP, 동적 계획법</strong>으로의 접근입니다.</p>
 <h2 id="접근법">접근법</h2>
 <h3 id="동적-계획법-dynamic-programming">동적 계획법 [Dynamic Programming]</h3>
-<p>동적 계획법의 개념은 <strong>어렵고 복잡한 문제를 간단한 여러개의 작은 문제들로 나누어 풀이해내는 방법</strong>이다. 단어 자체가 주는 압박감(?)을 뒤로하고 개념만 들어보면 참 간단하다.</p>
-<p>너무 간단한 개념 설명을 조금 보충할 필요가 있을 것 같아서 위키 설명을 참조해보았다.</p>
+<p>동적 계획법의 개념 자체는 <strong>어렵고 복잡한 문제를 간단한 여러개의 작은 문제들로 나누어 풀이해내는 방법</strong>입니다. 분명 개념은 아주 쉽죠..? 하지만 알고리즘 문제를 풀면서 동적 계획법을 써보세요~ 하면 머릿속이 복잡해기 시작할겁니다.</p>
+<p>너무 간단한 개념 설명을 조금 보충할 필요가 있을 것 같아서 위키 설명을 참조해 보겠습니다!</p>
 <blockquote>
 <p>(동적 계획법이란) 주어진 문제를 풀기 위해서, 문제를 여러 개의 하위 문제(subproblem)로 나누어 푼 다음, 그것을 결합하여 최종적인 목적에 도달하는 것이다. 각 하위 문제의 해결을 계산한 뒤, 그 해결책을 저장하여 후에 같은 하위 문제가 나왔을 경우 그것을 간단하게 해결할 수 있다. 이러한 방법으로 동적 계획법은 계산 횟수를 줄일 수 있다. 특히 이 방법은 하위 문제의 수가 기하급수적으로 증가할 때 유용하다.</p>
 </blockquote>
-<p>자, 그럼 개념을 통해서 동전 계산하기 문제를 보면 주어진 큰 문제를 작은 여러개의 하위 문제로 나눌 필요가 있다. 정말 단순하게 떠오르는 접근법으론 총 금액에서 가지고 있는 종류의 동전을 하나씩 빼보면서 정확히 0을 맞추어 낼 수 있는지를 확인하면 될 것 같다. 그렇다면 여기서 <!-- raw HTML omitted --><!-- raw HTML omitted -->&lsquo;작은 문제&rsquo;는 &lsquo;총 금액에서 종류별 금액을 빼보기&rsquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->가 되겠다.
-그럼 총 금액을 인자로 받아 가지고 있는 동전의 종류마다 하나씩 빼는 함수를 만들어보자!</p>
+<p>자, 그럼 개념을 통해서 동전 계산하기 문제를 봅시다. 지금 주어진 큰 문제를 작은 여러개의 하위 문제로 나눌 필요가 있습니다. 정말 단순하게 떠오르는 접근법으론 총 금액에서 가지고 있는 종류의 동전을 하나씩 빼보면서 정확히 0을 맞추어 낼 수 있는지를 확인하면 될 것 같네요. 그렇다면 여기서 <!-- raw HTML omitted --><!-- raw HTML omitted -->&lsquo;작은 문제&rsquo;는 &lsquo;총 금액에서 종류별 금액을 빼보기&rsquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->가 되겠습니다.
+그럼 총 금액을 인자로 받아 가지고 있는 동전의 종류마다 하나씩 빼는 함수를 짜봅시다!</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp</span>(n):
 </span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">여기 하위 문제를 푸는 함수 dp(n)을 만들었다.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">남은 금액 n을 인자로 받고, 가지고 있는 종류의 동전(coin)마다 하나씩 뺀 뒤에 재귀적으로 다시 dp(n - coin)을 넣어준다. 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">여기 하위 문제를 푸는 함수 dp(n)을 만들었습니다.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">남은 금액 n을 인자로 받고, 가지고 있는 종류의 동전(coin)마다 하나씩 뺀 뒤에 재귀적으로 다시 dp(n - coin)을 넣습니다.
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> coin <span style="color:#f92672">in</span> coins:
 </span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> min(res, <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> dp(n <span style="color:#f92672">-</span> coin))
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
-</span></span></code></pre></div><p>위 함수는 동전을 뺐을 때 금액이 0이 되는 경우나 음수가 되는 예외적인 경우를 아직 포함하지 않은 상태로 정말 기초적인 아이디어만 제시한 상태다.</p>
+</span></span></code></pre></div><p>위 함수는 동전을 뺐을 때 금액이 0이 되는 경우나 음수가 되는 예외적인 경우를 아직 포함하지 않았네요.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> min(result, <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> dp(n <span style="color:#f92672">-</span> coin))
-</span></span></code></pre></div><p>위 코드가 핵심인데, 재귀적으로 dp(n - coin)을 부름으로써 coin을 빼는 모든 경우를 계산한다. 그 뒤엔 이를 각각 지금의 result값과 비교해서 더 적은 값(최소 값)을 돌려주도록 설계했다. (이 짧은 부분을 이해하는데 한참이 걸린 것 같다.)</p>
-<p>이제 해당 문제를 실제로 풀이하기 위해 코드를 수정해보자. Solution 클래스와 coinChange 함수는 LeetCode에서 제공하는 기본 템플릿이며, 문제를 풀기 위해서는 이 내부에 입력값과 출력값을 고려하여 코드를 작성하면 된다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
+</span></span></code></pre></div><p>위 코드가 오늘 동적 계획법 적용의 핵심입니다. 재귀적으로 dp(n - coin)을 부름으로써 coin을 빼는 모든 경우를 계산합니다. 그 뒤엔 이를 각각 지금의 result값과 비교해서 더 적은 값(최소 값)을 돌려주도록 설계했습니다. (저는 이 짧은 부분을 이해하는데 한참이 걸린 것 같네요.)</p>
+<p>이제 해당 문제를 실제로 풀이하기 위해 코드를 수정해봅시다. Solution 클래스와 coinChange 함수는 LeetCode에서 제공하는 기본 템플릿이며, 문제를 풀기 위해서는 이 내부에 입력값과 출력값을 고려하여 코드를 작성하면 됩니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">coinChange</span>(self, coins, amount):
 </span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        :type coins: List[int]
@@ -408,13 +412,13 @@ Return <strong>the fewest number of coins</strong> that you need to make up that
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> result <span style="color:#66d9ef">if</span> result <span style="color:#f92672">!=</span> float(<span style="color:#e6db74">&#39;INF&#39;</span>) <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> dp(amount)
-</span></span></code></pre></div><p>문제 해결을 위해서 몇가지를 수정하긴 했지만, 핵심 구조는 동일하다!<br>
-개인적으로 바로 이해가 안됬던 부분은 <code>result = float('INF')</code> 이 부분이었는데, 곰곰히 생각해보니 이해가 된다. 함수의 핵심 구조는 <code>result = min(result, 1 + dp(n - coin))</code> 이고 여기서 <code>min()</code>을 이용하여 최솟값을 누적하여 구해내고 있다. 이렇게 되면 처음 초기화 한 result의 값이 <code>min()</code>에 들어갔을 때 나올 수 있는 최솟값 보다 항상 커야만 하며, 그러므로 정의할 수 있는 가장 큰 값인 양의 무한대로 초기화를 해야 어떠한 예외없이 result의 초기값이 항상 크다는걸 보장할 수 있다.</p>
+</span></span></code></pre></div><p>문제 해결을 위해서 몇가지를 수정하긴 했지만, 핵심 구조는 동일합니다!<br>
+개인적으로 바로 이해가 안됬던 부분은 <code>result = float('INF')</code> 이 부분이었는데, 차근히 생각해보니 이해가 됩니다. 함수의 핵심 구조는 <code>result = min(result, 1 + dp(n - coin))</code> 이고 여기서 <code>min()</code>을 이용하여 최솟값을 <strong>누적</strong>하여 구하고 있습니다. 이렇게 되면 처음 초기화 한 result의 값이 <code>min()</code>에 들어갔을 때 나올 수 있는 최솟값 보다 항상 커야만 하며, 그러므로 정의할 수 있는 가장 큰 값인 양의 무한대로 초기화를 해야 어떠한 예외없이 result의 초기값이 항상 크다는걸 보장할 수 있게 됩니다.</p>
 <h3 id="동적-계획법-개선하기">동적 계획법 개선하기</h3>
-<p>위의 방식은 단순 재귀함수를 이용한 접근으로 동적계획법을 잘 이용하긴 했지만 같은 게산을 중복으로 하게 되는 경우가 있다.<br>
-예를 들어 <code>coins = [2,3,5], amount = 17</code> 이 입력되었을 때, 위 함수는 <code>17 - 5 - 5 - 2 - 5 = 0</code> 와<code>17 - 5 - 2 - 5 - 5 = 0</code>를 계산하는 경우애 첫 <code>dp(17 - 5)</code> 값을 매번 일일히 계산하고 작은 값을 반환하게 된다.
-하지만 만약 이 <code>dp(12)</code> 값을 어딘가 저장해두고 다시 찾을 때 반환한다면 중복 없이 훨씬 빠르게 문제를 끝낼 수 있게 된다! 이처럼 저장해두는 장소를 보통 <strong>메모</strong>라고 선언 한다. 아래는 메모를 이용한 동적 계획법 풀이이다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
+<p>위의 방식은 단순 재귀함수를 이용한 접근으로 동적계획법을 잘 이용하긴 했지만 같은 계산을 중복으로 하게 되는 문제가 있습니다.<br>
+예를 들어 <code>coins = [2,3,5], amount = 17</code> 이 입력되었을 때, 위 함수는 <code>17 - 5 - 5 - 2 - 5 = 0</code> 와<code>17 - 5 - 2 - 5 - 5 = 0</code>를 계산하는 경우애 첫 <code>dp(17 - 5)</code> 값을 매번 일일히 계산하고 나서야 값을 반환합니다.
+하지만 만약 이 <code>dp(12)</code> 값을 어딘가 저장해두고 다시 찾을 때 반환한다면 중복 없이 훨씬 빠르게 문제를 끝낼 수 있게 될겁니다! 이처럼 저장해두는 장소를 보통 <strong>메모</strong>라고 선언 한다. 아래는 메모를 이용한 동적 계획법 풀이를 적어보았습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">coinChange</span>(self, coins, amount):
 </span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        :type coins: List[int]
@@ -435,7 +439,7 @@ Return <strong>the fewest number of coins</strong> that you need to make up that
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> memo[n]
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> dp(amount)
-</span></span></code></pre></div><p><code>memo</code>를 딕셔너리 형태로 선언하고 메모 값을 먼저 확인하여 중복된 계산을 바로 피할 수 있게 되었다!</p>
+</span></span></code></pre></div><p><code>memo</code>라는 변수를 딕셔너리 형태로 선언하고 계산하기 전에 저장된 메모 값을 먼저 확인하여 중복된 계산을 바로 피할 수 있게 되었습니다!</p>
 <p>해당 PS 풀이는 도서 <!-- raw HTML omitted --><a class="link" href="https://product.kyobobook.co.kr/detail/S000061898577"  target="_blank" rel="noopener"
     >[코딩 인터뷰를 위한 알고리즘 치트시트, 푸둥라이 지음]</a><!-- raw HTML omitted -->을 참고하며 진행중임을 밝힙니다.</p>
 

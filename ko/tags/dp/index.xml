@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>DP on What is This&#39; BLOG</title>
+        <link>https://whatisthis8047.github.io/ko/tags/dp/</link>
+        <description>Recent content in DP on What is This&#39; BLOG</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ko-KR</language>
+        <lastBuildDate>Mon, 04 Mar 2024 11:47:26 +0900</lastBuildDate><atom:link href="https://whatisthis8047.github.io/ko/tags/dp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>[LeetCode] 300. Longest Increasing Subsequence</title>
+        <link>https://whatisthis8047.github.io/ko/post/leetcode_300/</link>
+        <pubDate>Mon, 04 Mar 2024 11:47:26 +0900</pubDate>
+        
+        <guid>https://whatisthis8047.github.io/ko/post/leetcode_300/</guid>
+        <description>&lt;h1 id=&#34;longest-increasing-subsequence-최장-증가-부분수열-문제로-동적계획법-이해하기&#34;&gt;Longest Increasing Subsequence (최장 증가 부분수열) 문제로 동적계획법 이해하기&lt;/h1&gt;
+&lt;h2 id=&#34;문제-소개&#34;&gt;문제 소개&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;리트코드 원본 문제 : &lt;a class=&#34;link&#34; href=&#34;https://leetcode.com/problems/longest-increasing-subsequence/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;(리트코드 사이트)&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;이번 문제는 설명이 비교적 간단합니다! &lt;em&gt;(물론 설명만&amp;hellip;? 간단합니다.)&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Given an integer array nums, return the length of &lt;strong&gt;the longest strictly increasing subsequence&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;한국어로 번역해보자면,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;nums라는 정수로 된 어레이를 입력받을 때, &lt;strong&gt;최장 (강한)증가 부분수열&lt;/strong&gt;의 길이를 반환하여라.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;(strictly increasing 즉, 강한 증가라는 뜻은 이전 값보다 크거나 &lt;strong&gt;같을&lt;/strong&gt; 때가 아니라 오로지 &lt;strong&gt;클 경우&lt;/strong&gt;에만 증가로 인정한다는 의미입니다.)&lt;/p&gt;
+&lt;h3 id=&#34;subsequence란&#34;&gt;Subsequence란?&lt;/h3&gt;
+&lt;p&gt;여기서 subsequence (&amp;lsquo;부분수열&amp;rsquo;로 번역했지만 원소가 굳이 &amp;lsquo;수&amp;rsquo;일 필요는 없습니다!)라는 용어가 헷갈릴 수 있는 부분이 있어 짚고 넘어가겠습니다. 먼저 부분수열 보다 큰 개념인 수열(sequence)를 정의하면 &amp;lsquo;순서가 있는 원소들로 구성된 리스트&amp;rsquo;로 정의할 수 있습니다. 부분수열은 어떤 수열의 &lt;strong&gt;순서를 바꾸지 않으면서&lt;/strong&gt; 원소를 삭제하여 얻을 수 있는 수열입니다.&lt;/p&gt;
+&lt;p&gt;예시를 들어보자면, letter = [A, B, C, D, E] 라는 수열이 있다면, subsequence는 [A, D], [B, C, E], [E],&amp;hellip; 등등 될 수 있는 것이죠. 전부 표현하지는 않았지만 그 개념은 충분히 이해하셨을 겁니다.&lt;/p&gt;
+&lt;h2 id=&#34;접근법&#34;&gt;접근법&lt;/h2&gt;
+&lt;p&gt;자 문제로 다시 돌아오면, 우리가 구해야하는 출력값은 최장 (강한)증가 부분수열입니다. 문제에서 주어진 조건은 &amp;lsquo;최장&amp;rsquo;과 &amp;lsquo;(강한)증가&amp;rsquo;로 나눌 수 있겠군요. 예시를 보며 풀이를 한번 짐작해 봅시다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;예시 1번&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Input: &lt;code&gt;nums = [10,9,2,5,3,7,101,18]&lt;/code&gt;&lt;br&gt;
+Output: &lt;code&gt;4&lt;/code&gt;&lt;br&gt;
+이유: 최장 증가 부분수열이 되는 경우는 &lt;code&gt;[2,3,7,101]&lt;/code&gt; 또는 &lt;code&gt;[2,3,7,18]&lt;/code&gt;이 되는군요. 그러므로 &lt;strong&gt;출력값은 4&lt;/strong&gt;가 됩니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;예시 2번&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Input: &lt;code&gt;nums = [0,1,0,3,2,3]&lt;/code&gt;&lt;br&gt;
+Output: &lt;code&gt;4&lt;/code&gt;&lt;br&gt;
+이유: 최장 증가 부분수열은 &lt;code&gt;[0,1,2,3]&lt;/code&gt;으로 출력값은 4가 됩니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;예시 3번&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Input: &lt;code&gt;nums = [7,7,7,7,7,7,7]&lt;/code&gt;&lt;br&gt;
+Output: &lt;code&gt;1&lt;/code&gt;&lt;br&gt;
+이유: 강한 증가 부분수열이기 때문에 &lt;code&gt;[7]&lt;/code&gt;이 최장의 부분수열이 되며 출력값은 1입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;풀이를 동적 계획법의 관점에서 생각해봅시다. 우리는 이 문제를 더 &lt;strong&gt;잘게 쪼개서&lt;/strong&gt; 해결하고 싶습니다. 그런 방법이야 무수히 많겠지만, 먼저 떠올릴 수 있는 방법은 &lt;strong&gt;정수 어레이를 앞에서부터 차례로 지나가며 가장 긴 부분수열의 길이를 반환&lt;/strong&gt;하도록 하는 것입니다!&lt;/p&gt;
+&lt;p&gt;간단하게 예를 들어보면서 풀이를 생각해봅시다. &lt;code&gt;nums = [1, 4, 3, 4, 2]&lt;/code&gt; 라는 어레이를 입력값으로 받았을 때, 우리가 원하는 풀이 방식은 다음과 같을겁니다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;먼저 첫번째 값인 1을 지나면서 최장 부분수열은 &lt;code&gt;[1]&lt;/code&gt;이니 길이가 1입니다.&lt;/li&gt;
+&lt;li&gt;다음으로는 4를 지나면서 &lt;code&gt;[1, 4]&lt;/code&gt;가 지금 최장이니까 길이는 2가 되겠네요,&lt;/li&gt;
+&lt;li&gt;다음은 3을 지나는데, 여기선 &lt;code&gt;[1, 3]&lt;/code&gt;과 &lt;code&gt;[1, 4]&lt;/code&gt;가 최장 부분수열이 될테니 길이는 2입니다.&lt;/li&gt;
+&lt;li&gt;다음은 4죠. &lt;code&gt;[1, 3, 4]&lt;/code&gt;이 가능하니 최장 부분수열의 길이는 3이네요.&lt;/li&gt;
+&lt;li&gt;마지막으로 2를 지날 땐 &lt;code&gt;[1, 3, 4]&lt;/code&gt;가 여전히 최장 부분수열입니다. 길이는 3이 되겠네요.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;그렇다면 이런 결과값을 저장할 수 있는 배열이 하나 더 있으면 좋겠다는 생각이 듭니다! 주어진 &lt;code&gt;nums&lt;/code&gt;의 원소들을 거치면서 각 원소일 때의 최장 부분수열의 길이를 저장해둔다면 그 뒤에는 저장해 둔 배열 안에서 최댓값만 찾으면 되니까요. 우리는 그런 배열의 이름을 &lt;code&gt;dp[]&lt;/code&gt;라고 합시다. 그럼 아래와 같은 배열 두개가 생기는겁니다. (index는 보면서 이해하기 편할 것 같아 추가했습니다)&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;index&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;0&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;1&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;2&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;3&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;4&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;nums&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;4&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;4&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;dp&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;다시 말하자면, &lt;code&gt;dp[i]&lt;/code&gt;값은 각 &lt;code&gt;nums[i]&lt;/code&gt;값 에서의 최장 부분수열의 길이입니다.&lt;/p&gt;
+&lt;p&gt;그럼 가장 중요한 일이 남았습니다. &lt;strong&gt;&amp;ldquo;그래서 이 &lt;code&gt;dp[]&lt;/code&gt;는 어떻게 구현하는데?&amp;rdquo;&lt;/strong&gt; 음&amp;hellip; 알고리즘을 푸는 감이 있는 분이시라면 위의 힌트만으로도 충분히 구현해보실 수 있겠지만, 다행히도(?) 저는 아니었기 때문에 꼬박 반나절을 끙끙 앓다가 결국 풀이를 보고 따라갔습니다. (그래도 오래 고민한 만큼 풀이를 빠르게 이해할 수는 있었네요ㅎㅎ)&lt;/p&gt;
+&lt;p&gt;지금은 이 포스트에서 동적 계획법을 배운다는 전제하에 접근하고 있기 때문에 곧바로 이를 이용한 풀이로 넘어가겠습니다. 먼저 동적 계획법으로 문제 풀이를 계획할 때, 중요한 키 포인트는 두가지입니다. 하나는 &lt;strong&gt;초기조건&lt;/strong&gt;, 다른 하나는 &lt;strong&gt;상태 전이 알고리즘&lt;/strong&gt; 입니다. (책에서는 상태 전이 방정식으로 소개되었지만 너무 수학적인 표현 같아 알고리즘이라는 용어로 바꾸었습니다)&lt;/p&gt;
+&lt;p&gt;먼저, &lt;strong&gt;초기 조건&lt;/strong&gt;은 말 그대로 가장 처음 반복문이나, 재귀문이 &lt;strong&gt;시작할 때의 상태&lt;/strong&gt;를 의미합니다. 다음으로, &lt;strong&gt;상태 전이 알고리즘&lt;/strong&gt;은 쉽게 말해 반복문이나 재귀적으로 함수가 실행될 때 &lt;strong&gt;각 단계에서 뭘 반복하는가?&lt;/strong&gt; 입니다. 생소한 이름이어서 어렵게 다가올 수는 있지만 겁먹지 않으셔도 됩니다! 여기서 반복하는 기능이야 함수에 따라 천차만별이 될 수 있습니다. 예를 들어, 이진 탐색의 경우엔 (주어진 배열에서 목표 숫자를 찾을 때 까지)배열을 절반으로 나누는 것이 그 기능이 되겠네요.&lt;/p&gt;
+&lt;h3 id=&#34;초기-조건&#34;&gt;초기 조건&lt;/h3&gt;
+&lt;p&gt;자, 그럼 정의를 알았으니 초기조건과 상태 전이 알고리즘을 끌어내 봅시다. 초기 조건은 &lt;code&gt;dp[i]&lt;/code&gt;의 &lt;code&gt;i=1&lt;/code&gt; 일 때, 즉 &lt;code&gt;dp[1]&lt;/code&gt;일 때의 값을 찾는 겁니다. 이를 해석하면 &lt;code&gt;nums&lt;/code&gt;의 첫번째 값인 &lt;code&gt;nums[1]&lt;/code&gt;을 지날 때의 최장 부분수열을 묻는 것과 같으니, 너무나도 당연하게 1입니다. 파이썬으로 정의해봅시다!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py3&#34; data-lang=&#34;py3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; _ &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(nums))]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;이렇게 dp를 정의하면 nums의 길이와 같은 리스트에 각 원소가 1로 초기화하게 됩니다. 즉, &lt;code&gt;dp = [1, 1, 1, ...]&lt;/code&gt; 와 같아지죠. 여기서 사용한 &lt;code&gt;[for ~ in]&lt;/code&gt; 으로 리스트를 선언하는 문법은 &lt;em&gt;list comprehension&lt;/em&gt; 이라는 기법입니다. 이런 간단한 배열을 만들때 유용한 기법이니 관심있으신 분은 구글에서 한번 읽어 보시는 걸 추천합니다. (이해가 안가신다면 반복문을 밖으로 빼어 다른 방법으로 정의하셔도 무관합니다)&lt;/p&gt;
+&lt;h3 id=&#34;상태-전이-알고리즘&#34;&gt;상태 전이 알고리즘&lt;/h3&gt;
+&lt;p&gt;그럼 상태 전이 알고리즘은 어떻게 될까요? 이를 생각해보기 쉽도록 위의 예시인 &lt;code&gt;nums = [1, 4, 3, 4, 2]&lt;/code&gt;를 한번 더 끌어옵시다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;index&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;0&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;1&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;2&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;3&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;4&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;nums&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;4&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;4&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;dp&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;우리가 i가 2에서 3로 넘어갈 때, 즉 &lt;code&gt;nums[2]&lt;/code&gt;에서 &lt;code&gt;nums[3]&lt;/code&gt;로 넘어가면서 최장 부분수열의 길이인 &lt;code&gt;dp[3]&lt;/code&gt;을 어떻게 수정했을까요? 그 과정을 파헤치면 알고리즘이 나옵니다! 우린 인덱스를 넘어가면서 의식적으로 내가 이전에 있던 최장 부분수열을 생각합니다. 즉, &lt;code&gt;i=2&lt;/code&gt; 에서 &lt;code&gt;dp[2]&lt;/code&gt;를 만든 &lt;code&gt;[1,4]&lt;/code&gt;와 &lt;code&gt;[1,3]&lt;/code&gt;을 생각했다가, &lt;code&gt;i=3&lt;/code&gt;으로 넘어갈 때 &lt;code&gt;nums[3] = 4&lt;/code&gt;가 기존의 두 최장 부분수열에서 더 이어질 수 있는가를 판단하죠. 이 경우엔 &lt;code&gt;[1, 4]&lt;/code&gt; 뒤에는 올 수 없지만, &lt;code&gt;[1, 3]&lt;/code&gt; 뒤에는 올 수 있으므로, &lt;code&gt;dp[3]&lt;/code&gt;값은 &lt;code&gt;[1, 3, 4]&lt;/code&gt;의 길이인 &lt;code&gt;3&lt;/code&gt;이 되었습니다. 여기서 핵심이 되는 과정은 &lt;strong&gt;앞에서 4보다 작은 수로 끝나는 부분순열을 찾아 이어붙이면 된다&lt;/strong&gt;는 것이었습니다. 즉, 우리의 상태 전이 알고리즘은 현재 &lt;code&gt;num[i]&lt;/code&gt; 값을 보고 그보다 작은 값들로 끝나는 부분수열의 길이 &lt;code&gt;dp[j]&lt;/code&gt;에 이어주기만 하면 됩니다.&lt;/p&gt;
+&lt;p&gt;글로만 읽게 되니 아직 불분명하게 느껴질 수 있을겁니다.&lt;br&gt;
+파이썬 코드로 확인해봅시다. (책에는 C++ 코드로 나와있지만 이해하기 쉽도록 파이썬으로 변형했습니다)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py3&#34; data-lang=&#34;py3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(nums)): &lt;span style=&#34;color:#75715e&#34;&gt;# 들어오는 nums 값의 인덱스를 i로 설정하고 반복문 돌리기&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(i): &lt;span style=&#34;color:#75715e&#34;&gt;# j는 현재 인덱스 i 이전의 값들을 훑기 위해 설정&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; nums[i] &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; nums[j]: &lt;span style=&#34;color:#75715e&#34;&gt;# 만약 현재 nums[i] 값 보다 작은 nums[j]가 있다면 아래 실행&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            dp[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; max(dp[i], dp[j] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#75715e&#34;&gt;# 지금까지 나온 dp[i]값과 dp[j]+1 값을 비교해서 더 큰 쪽을 dp[i] 값으로 업데이트&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# 여기서 dp[j]+1 인 이유는 기존의 최장 부분순열의 길이에 지금 값 nums[i]를 붙이므로 값이 하나 커지는 것을 의미!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;코드에 대한 설명은 주석으로 하나씩 설명해두었습니다.&lt;/p&gt;
+&lt;p&gt;우리는 동적 계획법에서 가장 중요한 &lt;strong&gt;1. 초기조건&lt;/strong&gt;과 &lt;strong&gt;2. 상태 전이 알고리즘&lt;/strong&gt; 두가지를 모두 작성했습니다! 이제 이걸 합쳐주기만 하면 우리가 원하는 결과가 나옵니다! 아래는 완성된 코드입니다.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py3&#34; data-lang=&#34;py3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Solution&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;lengthOfLIS&lt;/span&gt;(self, nums: List[int]) &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; int:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        dp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; _ &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(nums))] &lt;span style=&#34;color:#75715e&#34;&gt;# dp를 nums 길이와 같고 각 원소가 1인 리스트로 초기화 (초기조건)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(nums)): &lt;span style=&#34;color:#75715e&#34;&gt;# 아까 상태전이 알고리즘을 그대로 사용&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(i):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; nums[i] &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; nums[j]:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    dp[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; max(dp[i], dp[j]&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; max(dp) &lt;span style=&#34;color:#75715e&#34;&gt;# dp 리스트에서 최댓값 반환&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;그럼 이번에도 리트코드 문제 동적 계획법으로 뽀개기 성공입니다! 지금까지 따라오신 분들에게 박수를 드려요 👏👏👏!!!&lt;/p&gt;
+&lt;p&gt;문제를 풀어 기쁘시겠지만! 잠깐! 이 해법은 과연 효율적인 풀이였을까요? 해당 풀이는 반복문을 두번 겹쳐 사용했기 때문에 시간 복잡도는 $O(n^2)$ 될껍니다. 풀이는 명쾌했는데 복잡도는 썩 좋아보이지 않죠? 사실 이 문제는 더 &lt;em&gt;&lt;strong&gt;효율적인&lt;/strong&gt;&lt;/em&gt; 알고리즘이 존재합니다. 하지만 떠올리기 너무너무 어렵기에 이번 포스트는 여기서 멈추고! 다음 포스트에 따로 다루도록 하겠습니다.&lt;/p&gt;
+&lt;p&gt;다시, 이 문제를 통해 가져가야할 핵심 아이디어는 &lt;strong&gt;&lt;em&gt;초기조건&lt;/em&gt;과 &lt;em&gt;상태전이 알고리즘&lt;/em&gt;을 어떻게 세울까?&lt;/strong&gt; 고민하는 부분입니다. 팁을 드리자면, 데이터에 어떤 값을 저장하게 하는게 좋을지 고민하는 것이 도움이 됩니다. 이번 문제에 dp 배열이 각 nums 위치에서 최장 부분수열의 길이였던 것 처럼요. 저도 다른 문제를 풀이할 때 떠올릴 수 있도록 기억해두도록 하겠습니다.&lt;/p&gt;
+&lt;p&gt;그럼 다들 좋은 하루 보내시길!&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

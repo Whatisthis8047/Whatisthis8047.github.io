@@ -242,15 +242,15 @@
 
     <div class="tagCloud-tags">
         
-            <a href="/ko/tags/algorithm/" class="font_size_2">
+            <a href="/ko/tags/algorithm/" class="font_size_3">
                 algorithm
             </a>
         
-            <a href="/ko/tags/cs/" class="font_size_2">
+            <a href="/ko/tags/cs/" class="font_size_3">
                 CS
             </a>
         
-            <a href="/ko/tags/leetcode/" class="font_size_2">
+            <a href="/ko/tags/leetcode/" class="font_size_3">
                 leetcode
             </a>
         
@@ -260,6 +260,10 @@
         
             <a href="/ko/tags/deeplearning/" class="font_size_1">
                 deeplearning
+            </a>
+        
+            <a href="/ko/tags/dp/" class="font_size_1">
+                DP
             </a>
         
     </div>
@@ -355,13 +359,13 @@
 The path sum of a path is the sum of the node&rsquo;s values in the path.<br>
 Given the root of a binary tree, return the maximum path sum of any non-empty path.</p>
 </blockquote>
-<p>한국어로는 다음과 같이 해석 가능하다.</p>
+<p>한국어로는 다음과 같이 해석 가능합니다.</p>
 <blockquote>
-<p>이진 트리 내의 <strong>경로</strong>란 인접한 노드들이 연결된 집합이다. 각 노드는 경로에 단 한번만 포함될 수 있고, 루트 노드를 꼭 지날 필요는 없다. 경로의 합(path sum)은 경로에 존재하는 각 노드들의 값을 더한 것이다.<br>
-이진 트리의 루트를 입력값으로 받을 때, 비어있지 않은 경로의 <strong>합이 가장 커지는 값</strong>을 반환하라.</p>
+<p>이진 트리 내의 <strong>경로</strong>란 인접한 노드들이 연결된 집합입니다. 각 노드는 경로에 단 한번만 포함될 수 있고, 루트 노드를 꼭 지날 필요는 없습니다. 경로의 합(path sum)은 경로에 존재하는 각 노드들의 값을 더한 것입니다.
+이진 트리의 루트를 입력값으로 받으면, 비어있지 않은 경로의 <strong>합이 가장 커지는 값</strong>을 반환하세요.</p>
 </blockquote>
 <h2 id="접근법">접근법</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">maxPathSum</span>(self, root):
 </span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        :type root: TreeNode
