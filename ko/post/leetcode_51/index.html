@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko-KR" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Coin Change (동전 계산하기) 문제로 동적 계획법 이해하기'>
-<title>[LeetCode] 322. Coin Change</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='N퀸 문제와 역추적(Backtracking) 알고리즘'>
+<title>[LeetCode] 51. N-Queens (1)</title>
 
-<link rel='canonical' href='https://whatisthis8047.github.io/ko/post/leetcode_322/'>
+<link rel='canonical' href='https://whatisthis8047.github.io/ko/post/leetcode_51/'>
 
-<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='[LeetCode] 322. Coin Change'>
-<meta property='og:description' content='Coin Change (동전 계산하기) 문제로 동적 계획법 이해하기'>
-<meta property='og:url' content='https://whatisthis8047.github.io/ko/post/leetcode_322/'>
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='[LeetCode] 51. N-Queens (1)'>
+<meta property='og:description' content='N퀸 문제와 역추적(Backtracking) 알고리즘'>
+<meta property='og:url' content='https://whatisthis8047.github.io/ko/post/leetcode_51/'>
 <meta property='og:site_name' content='What is This&#39; BLOG'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='leetcode' /><meta property='article:tag' content='CS' /><meta property='article:tag' content='algorithm' /><meta property='article:published_time' content='2024-01-25T21:15:26&#43;09:00'/><meta property='article:modified_time' content='2024-01-25T21:15:26&#43;09:00'/>
-<meta name="twitter:title" content="[LeetCode] 322. Coin Change">
-<meta name="twitter:description" content="Coin Change (동전 계산하기) 문제로 동적 계획법 이해하기">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='leetcode' /><meta property='article:tag' content='CS' /><meta property='article:tag' content='algorithm' /><meta property='article:published_time' content='2024-03-08T11:13:28&#43;09:00'/><meta property='article:modified_time' content='2024-03-08T11:13:28&#43;09:00'/>
+<meta name="twitter:title" content="[LeetCode] 51. N-Queens (1)">
+<meta name="twitter:description" content="N퀸 문제와 역추적(Backtracking) 알고리즘">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -220,8 +220,8 @@
     <li><a href="#문제-소개">문제 소개</a></li>
     <li><a href="#접근법">접근법</a>
       <ul>
-        <li><a href="#동적-계획법-dynamic-programming">동적 계획법 [Dynamic Programming]</a></li>
-        <li><a href="#동적-계획법-개선하기">동적 계획법 개선하기</a></li>
+        <li><a href="#역추적-알고리즘">역추적 알고리즘</a></li>
+        <li><a href="#알고리즘을-적용한-문제풀이">알고리즘을 적용한 문제풀이</a></li>
       </ul>
     </li>
   </ul>
@@ -299,12 +299,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/ko/post/leetcode_322/">[LeetCode] 322. Coin Change</a>
+            <a href="/ko/post/leetcode_51/">[LeetCode] 51. N-Queens (1)</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Coin Change (동전 계산하기) 문제로 동적 계획법 이해하기
+            N퀸 문제와 역추적(Backtracking) 알고리즘
         </h3>
         
     </div>
@@ -325,7 +325,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Jan 25, 2024</time>
+                <time class="article-time--published">Mar 08, 2024</time>
             </div>
         
 
@@ -340,7 +340,7 @@
 
 
                 <time class="article-time--reading">
-                    약 5 분
+                    약 4 분
                 </time>
             </div>
         
@@ -355,92 +355,111 @@
     <section class="article-content">
     
     
-    <h1 id="coin-change-동전-계산하기-문제로-동적-계획법-이해하기">Coin Change (동전 계산하기) 문제로 동적 계획법 이해하기</h1>
+    <h1 id="n퀸-문제와-역추적backtracking-알고리즘">N퀸 문제와 역추적(Backtracking) 알고리즘</h1>
 <h2 id="문제-소개">문제 소개</h2>
-<p><strong>리트코드 원본 문제  : <a class="link" href="https://leetcode.com/problems/coin-change/description/"  target="_blank" rel="noopener"
+<p><strong>리트코드 원본 문제 : <a class="link" href="https://leetcode.com/problems/n-queens/description/"  target="_blank" rel="noopener"
     >(리트코드 사이트)</a></strong></p>
 <blockquote>
-<p>You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.<br>
-Return <strong>the fewest number of coins</strong> that you need to make up that amount. If that amount of money <strong>cannot</strong> be made up by any combination of the coins, <strong>return -1</strong>. You may assume that you have an infinite number of each kind of coin.</p>
+<p>The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.<br>
+Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.<br>
+Each solution contains a distinct board configuration of the n-queens&rsquo; placement, where &lsquo;Q&rsquo; and &lsquo;.&rsquo; both indicate a queen and an empty space, respectively.</p>
 </blockquote>
-<p>이를 한국어로 해석해보자면,</p>
+<p>한국어로 번역해보자면,</p>
 <blockquote>
-<p>입력으로 &ldquo;단위가 다른 동전 종류(어레이)&ldquo;와 &ldquo;동전들을 가지고 만들 총 금액&rdquo; 두가지를 받습니다.
-이때, 총 금액 값을 만드는 <strong>가장 적은 동전의 갯수를 반환</strong>하십시오. 만약 가지고 있는 동전들로 총 금액을 만들 수 없는 경우에는 -1을 반환하며, 각 동전의 개수는 항상 총액을 만들 수 있을 만큼 충분히 많다고 가정합니다.</p>
+<p>n-퀸 퍼즐은 여왕들이 서로 공격하지 않도록 n x n 짜리 체스판에 n개의 여왕을 배치하는 문제이다.
+정수 n이 주어졌을 때, 가능한 모든 해를 반환하며 해답의 순서는 상관 없다.
+각 해는 n개의 여왕을 배치할 수 있는 보드의 구성을 포함해야 하며 &lsquo;Q&rsquo;는 여왕, &lsquo;.&lsquo;는 빈칸을 나타낸다.</p>
 </blockquote>
-<p>이 문제는 책 초반에 다양한 PS 문제들의 기본적인 접근법이 되는 프레임들을 안내해주는 1.2장에서 소개 되었습니다. 저는 아직 알고리즘 문제를 풀어보는 경험이 아에 없다시피 하기 때문에 쉽게 설명하고 넘어가는 부분에도 오랜시간을 보내며 어떻게 작동하는지 그려보며 따라가 보았습니다!</p>
-<p>책에서 제시하는 키워드는 <strong>DP, 동적 계획법</strong>으로의 접근입니다.</p>
+<p>이 문제는 제시문 자체를 이해하는 것이 어렵기 때문에 설명을 조금 덧붙이자면, 입력값은 단순하게 n = 3 이나, n = 4 등 간단한 정수를 입력으로 받게 되고, 우리는 이 n에 따른 n x n 짜리 체스판이 있다고 가정하는 겁니다. 그 체스판 안에 n개의 퀸의 경로가 겹치지 않도록 배치도를 반환하는 문제인 것이죠. 문제 설명에 제시된 예시를 한번 보자면,</p>
+<blockquote>
+<p>입력값: <code>n = 4  </code>
+출력값: <code>[[&quot;.Q..&quot;,&quot;...Q&quot;,&quot;Q...&quot;,&quot;..Q.&quot;],[&quot;..Q.&quot;,&quot;Q...&quot;,&quot;...Q&quot;,&quot;.Q..&quot;]]</code></p>
+</blockquote>
+<p>아래는 입력값 <code>n = 4</code> 일 때 출력값을 시각화 하여 보여준 그림입니다. 즉, 출력의 각 원소는 하나의 n x n 짜리 체스판을 나타내고, 체스판 내의 각 원소는 위에서부터 가로로 (또는 세로로도 읽을 수 있습니다) <strong>한 줄</strong>씩 나타낸 값이 됩니다.</p>
+<p><img src="/queens.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="queens"
+	
+	
+></p>
+<p><code>n = 4</code> 일 경우에는 위의 두가지 답 외에는 퀸을 놓을 수 있는 방법이 없습니다. 이런 문제를 어떻게 하면 풀 수 있을까요?</p>
 <h2 id="접근법">접근법</h2>
-<h3 id="동적-계획법-dynamic-programming">동적 계획법 [Dynamic Programming]</h3>
-<p>동적 계획법의 개념 자체는 <strong>어렵고 복잡한 문제를 간단한 여러개의 작은 문제들로 나누어 풀이해내는 방법</strong>입니다. 분명 개념은 아주 쉽죠..? 하지만 알고리즘 문제를 풀면서 동적 계획법을 써보세요~ 하면 어디서부터 시작할지 막막할겁니다.</p>
-<p>일단 너무 간단한 개념 설명을 조금 보충할 필요가 있을 것 같아서 위키 설명을 참조해 보겠습니다!</p>
+<h3 id="역추적-알고리즘">역추적 알고리즘</h3>
+<p>오늘 이 문제와 연관된 키워드는 <strong>역추적(Backtracking) 알고리즘</strong> 입니다. 그렇다면 역추적 알고리즘이 무엇인지 위키에서 살펴봅시다. 위키는 Backtracking을 &lsquo;퇴각검색&rsquo;으로 번역합니다.</p>
 <blockquote>
-<p>(동적 계획법이란) 주어진 문제를 풀기 위해서, 문제를 여러 개의 하위 문제(subproblem)로 나누어 푼 다음, 그것을 결합하여 최종적인 목적에 도달하는 것이다. 각 하위 문제의 해결을 계산한 뒤, 그 해결책을 저장하여 후에 같은 하위 문제가 나왔을 경우 그것을 간단하게 해결할 수 있다. 이러한 방법으로 동적 계획법은 계산 횟수를 줄일 수 있다. 특히 이 방법은 하위 문제의 수가 기하급수적으로 증가할 때 유용하다.</p>
+<p>퇴각검색(영어: backtracking, 한국어: 백트래킹)은 한정 조건을 가진 문제를 풀려는 전략이다. 문제가 한정 조건을 가진 경우 원소의 순서는 해결 방법과 무관하다. 이런 문제는 변수 집합으로 이뤄지는데, 한정 조건을 구성하려면 각각의 변수들은 값이 있어야 한다. <strong>퇴각검색은 모든 조합을 시도해서 문제의 해를 찾는다. 이것이 장점이 될 수 있는 이유는 퇴각검색 구현 방법들이 많은 부분 조합들을 배제하기 때문이다.</strong> 결국 풀이 시간이 단축된다. (출처: <a class="link" href="https://ko.wikipedia.org/wiki/%ED%87%B4%EA%B0%81%EA%B2%80%EC%83%89"  target="_blank" rel="noopener"
+    >위키피디아</a>)</p>
 </blockquote>
-<p>그러니까 지금 문제를 하위 문제들로 나누고, 저장해서 큰 문제로 어떻게 접근해낼지 고민하는 것이 필요한거네요. 다시 동전 계산하기 문제를 봅시다. 지금 주어진 큰 문제는 뭘까요? 가진 동전들로 총 금액을 만드는 것이겠죠? 이를 조금 무식하게 접근하면, 총 금액에서 가지고 있는 종류의 동전을 하나씩 빼보면서 정확히 0을 맞추어 낼 수 있는지를 확인하면 되겠네요. 그런 모든 경우에서 가장 적은 동전이 나오는 걸 반환하면 정답이 되겠죠? 그렇다면 여기서 <!-- raw HTML omitted --><!-- raw HTML omitted -->&lsquo;작은 문제&rsquo;는 &lsquo;총 금액에서 종류별 금액을 빼보기&rsquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->가 되겠습니다.
-그럼 총 금액을 인자로 받아 가지고 있는 동전의 종류마다 하나씩 빼는 함수를 짜봅시다!</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py3" data-lang="py3"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp</span>(n):
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">여기 하위 문제를 푸는 함수 dp(n)을 만들었습니다.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">남은 금액 n을 인자로 받고, 가지고 있는 종류의 동전(coin)마다 하나씩 뺀 뒤에 재귀적으로 다시 dp(n - coin)을 넣습니다.
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> coin <span style="color:#f92672">in</span> coins:
-</span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> min(res, <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> dp(n <span style="color:#f92672">-</span> coin))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
-</span></span></code></pre></div><p>위 함수는 동전을 뺐을 때 금액이 0이 되는 경우나 음수가 되는 예외적인 경우를 아직 포함하지 않았네요.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py3" data-lang="py3"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> min(result, <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> dp(n <span style="color:#f92672">-</span> coin))
-</span></span></code></pre></div><p>위 코드가 오늘 동적 계획법 적용의 핵심입니다. 재귀적으로 <code>dp(n - coin)</code>을 부름으로써 coin을 빼는 <strong>모든 경우를 계산</strong>합니다. 그 뒤엔 이를 각각 지금의 result값과 비교해서 더 적은 값(최소 값)을 돌려주도록 동작합니다. (저는 이 짧은 부분이 어떻게 움직이는지 이해하는 데에만 한참이 걸린 것 같네요.)</p>
-<p>이제 해당 문제를 실제로 풀이하기 위해 코드를 수정해봅시다. Solution 클래스와 coinChange 함수는 LeetCode에서 제공하는 기본 템플릿이며, 문제를 풀기 위해서는 이 내부에 입력값과 출력값을 고려하여 코드를 작성하면 됩니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py3" data-lang="py3"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">coinChange</span>(self, coins, amount):
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        :type coins: List[int]
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        :type amount: int
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        :rtype: int
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp</span>(n): 
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 초기조건(base case)</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>: <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 최솟값을 구할 때 비교하기 위해 가장 큰 값인 양의 무한대로 초기화</span>
-</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;INF&#39;</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> coin <span style="color:#f92672">in</span> coins:
-</span></span><span style="display:flex;"><span>                subproblem <span style="color:#f92672">=</span> dp(n <span style="color:#f92672">-</span> coin)
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># 하위 문제의 답이 없을 시 -1을 리턴하므로 건너뛰기</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> subproblem <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>: <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>                result <span style="color:#f92672">=</span> min(result, <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> subproblem)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> result <span style="color:#66d9ef">if</span> result <span style="color:#f92672">!=</span> float(<span style="color:#e6db74">&#39;INF&#39;</span>) <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+<p>설명이 너무 어려운 것 같네요ㅠ. 일단 지금 중요한 부분만 뽑아 굵은 글씨로 표시해두었습니다. 말 그대로 주어진 모든 조합을 시도해서 해를 찾는데, 이를 구현하는 방법에서 부분 조합들을 베제하기 때문에 풀이가 빨라진다~ 로 읽으면 되겠습니다. 반복을 줄이는 방법에도 여러가지 유형이 있지만, 거기까진 다루지 않겠습니다.</p>
+<p>이를 구현하는 아주 기본적인 프레임을 의사코드로 확인해보죠:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py3" data-lang="py3"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">backtrack</span>(경로, 선택 리스트): <span style="color:#75715e"># 경로와 선택 리스트는 둘 다 리스트 변수입니다.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> 종료 조건 만족시:
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>add(경로)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> 선택 <span style="color:#f92672">in</span> 선택 리스트: <span style="color:#75715e">#핵심부분</span>
+</span></span><span style="display:flex;"><span>        선택하기 <span style="color:#75715e"># 선택 리스트 중 지금 선택한 경우 제거 후 경로 리스트에 추가</span>
+</span></span><span style="display:flex;"><span>        backtrack(경로, 선택 리스트)
+</span></span><span style="display:flex;"><span>        선택 해제 <span style="color:#75715e"># 경로 리스트에서 아까 선택한 경우를 제거 후 선택 리스트에 추가</span>
+</span></span></code></pre></div><p>위 코드를 머리속에서 잠깐 굴려봅시다. 먼저 backtrack이라는 함수가 재귀적으로 실행되면서 선택 리스트에 있는 원소를 하나씩 경로 리스트로 옮깁니다. 더 이상 재귀적으로 실행될 선택 리스트 원소가 없다면, (명시되어있진 않았습니다) 다시 선택을 해제하며 기존 불렀던 backtrack 함수가 실행될 겁니다. 결국 선택 리스트에 있는 모든 원소를 처음부터 끝까지 경로 리스트로 옮겼다 돌아오게 될겁니다.</p>
+<h3 id="알고리즘을-적용한-문제풀이">알고리즘을 적용한 문제풀이</h3>
+<p>다시 문제로 돌아옵시다. 결국 우리는 이번 N-Queens 문제를 역추적 알고리즘을 이용하여 푸는 것이 핵심입니다. 머리를 조금 아프겠지만 위의 프레임을 문제에 적용해봅시다.</p>
+<p>일단 backtrack을 적용하기에 앞서, n x n 체스판을 구성해야합니다. 일단 주어진 체스판이 비었다고 생각하고 만들면 &ldquo;.&ldquo;이 n개씩 들어간 줄이 n개 나열되면 되겠네요.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py3" data-lang="py3"><span style="display:flex;"><span>board <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">*</span>n <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n)]
+</span></span></code></pre></div><p>이렇게 만들면 <code>n = 4</code> 일 때 <code>[&quot;....&quot;,&quot;....&quot;,&quot;....&quot;,&quot;....&quot;]</code>이 되겠네요. 빈 체스판을 완성했습니다! 다음은 backtrack 알고리즘입니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py3" data-lang="py3"><span style="display:flex;"><span>res <span style="color:#f92672">=</span> []
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> dp(amount)
-</span></span></code></pre></div><p>문제 해결을 위해서 몇가지를 수정하긴 했지만, 핵심 구조는 동일합니다!<br>
-개인적으로 바로 이해가 어려웠던 부분은 <code>result = float('INF')</code> 부분이었습니다. 함수의 핵심 구조는 <code>result = min(result, 1 + dp(n - coin))</code> 이고 여기서 <code>min()</code>을 이용하여 최솟값을 <strong>누적 비교</strong>하여 구하고 있습니다. 이렇게 되면 처음 초기화 한 result의 값이 <code>min()</code>에 들어갔을 때 나올 수 있는 최솟값 보다 항상 커야만 하며, 그러므로 정의할 수 있는 가장 큰 값인 양의 무한대로 초기화를 해야 어떠한 예외없이 result의 초기값이 항상 크다는걸 보장할 수 있게 됩니다. (주어진 값은 항상 양의 무한대보단 작을 테니까요)</p>
-<h3 id="동적-계획법-개선하기">동적 계획법 개선하기</h3>
-<p>위의 방식은 단순 재귀함수를 이용한 접근으로 동적계획법을 잘 이용하긴 했지만 <strong>같은 계산을 중복으로 하게 되는 문제</strong>가 있습니다. 위키피디아의 인용문에서 &ldquo;각 하위 문제의 해결을 계산한 뒤, 그 해결책을 저장하여 후에 같은 하위 문제가 나왔을 경우 그것을 간단하게 해결할 수 있다&rdquo; 고 서술되어 있듯이, 우리는 이미
-예를 들어 <code>coins = [2,3,5], amount = 17</code> 이 입력되었을 때, 위 함수는 <code>17 - 5 - 5 - 2 - 5 = 0</code> 와<code>17 - 5 - 2 - 5 - 5 = 0</code>를 계산하는 경우애 첫 <code>dp(17 - 5)</code> 값을 매번 일일히 계산하고 나서야 값을 반환합니다.
-하지만 만약 이 <code>dp(12)</code> 값을 어딘가 저장해두고 다시 찾을 때 반환한다면 중복 없이 훨씬 빠르게 문제를 끝낼 수 있게 될겁니다! 이처럼 저장해두는 장소를 보통 <strong>메모</strong>라고 선언 한다. 아래는 메모를 이용한 동적 계획법 풀이를 적어보았습니다.</p>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">backtrack</span>(board, row): <span style="color:#75715e"># 경로, 선택리스트가 각각 board와 row로 변환</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> row <span style="color:#f92672">==</span> len(board): <span style="color:#75715e"># 지금 확인하는 row가 마지막 행을 넘으면 종료</span>
+</span></span><span style="display:flex;"><span>        res<span style="color:#f92672">.</span>append(board[:]) <span style="color:#75715e"># 지금 결과값 board를 결과 리스트에 저장</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> 
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> col <span style="color:#f92672">in</span> range(len(board)):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> isValid(board, row, col) <span style="color:#f92672">==</span> <span style="color:#66d9ef">False</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>        board[row] <span style="color:#f92672">=</span> board[row][:col] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;Q&#34;</span> <span style="color:#f92672">+</span> board[row][<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>col:]
+</span></span><span style="display:flex;"><span>        backtrack(board, row <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        board[row] <span style="color:#f92672">=</span> board[row][:col] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> board[row][<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>col:]
+</span></span></code></pre></div><p>if row == len(board): # 지금 확인하는 row가 마지막 행을 넘으면 종료함.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py3" data-lang="py3"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">coinChange</span>(self, coins, amount):
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        :type coins: List[int]
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        :type amount: int
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        :rtype: int
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>        memo <span style="color:#f92672">=</span> {}
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp</span>(n):  
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> n <span style="color:#f92672">in</span> memo: <span style="color:#66d9ef">return</span> memo[n] <span style="color:#75715e"># 메모에 값이 있으면 바로 반환</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>: <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;INF&#39;</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> coin <span style="color:#f92672">in</span> coins:
-</span></span><span style="display:flex;"><span>                sub <span style="color:#f92672">=</span> dp(n <span style="color:#f92672">-</span> coin)
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> sub <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>: <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>                result <span style="color:#f92672">=</span> min(result, <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> sub)
-</span></span><span style="display:flex;"><span>            memo[n] <span style="color:#f92672">=</span> result <span style="color:#66d9ef">if</span> result <span style="color:#f92672">!=</span> float(<span style="color:#e6db74">&#39;INF&#39;</span>) <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> memo[n]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">solveNQueens</span>(self, n):
+</span></span><span style="display:flex;"><span>        res <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        board <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">*</span>n <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n)]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">backtrack</span>(board, row):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">nonlocal</span> res
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> row <span style="color:#f92672">==</span> len(board):
+</span></span><span style="display:flex;"><span>                res<span style="color:#f92672">.</span>append(board[:])
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> 
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> col <span style="color:#f92672">in</span> range(len(board)):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> isValid(board, row, col) <span style="color:#f92672">==</span> <span style="color:#66d9ef">False</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>                board[row] <span style="color:#f92672">=</span> board[row][:col] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;Q&#34;</span> <span style="color:#f92672">+</span> board[row][<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>col:]
+</span></span><span style="display:flex;"><span>                backtrack(board, row <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>                board[row] <span style="color:#f92672">=</span> board[row][:col] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> board[row][<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>col:]
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">isValid</span>(board, row, col):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(row):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> board[i][col] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Q&#34;</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> dp(amount)
-</span></span></code></pre></div><p><code>memo</code>라는 변수를 딕셔너리 형태로 선언하고 계산하기 전에 저장된 메모 값을 먼저 확인하여 중복된 계산을 바로 피할 수 있게 되었습니다!</p>
-<p>해당 PS 풀이는 도서 <!-- raw HTML omitted --><a class="link" href="https://product.kyobobook.co.kr/detail/S000061898577"  target="_blank" rel="noopener"
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i, j <span style="color:#f92672">in</span> zip(range(row <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>), range(col <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, len(board), <span style="color:#ae81ff">1</span>)):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> board[i][j] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Q&#34;</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i, j <span style="color:#f92672">in</span> zip(range(row <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>), range(col <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> board[i][j] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Q&#34;</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        backtrack(board, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> res
+</span></span></code></pre></div><p>해당 PS 풀이는 도서 <!-- raw HTML omitted --><a class="link" href="https://product.kyobobook.co.kr/detail/S000061898577"  target="_blank" rel="noopener"
     >[코딩 인터뷰를 위한 알고리즘 치트시트, 푸둥라이 지음]</a><!-- raw HTML omitted -->을 참고하며 진행중임을 밝힙니다.</p>
 
 </section>
@@ -505,9 +524,42 @@ Return <strong>the fewest number of coins</strong> that you need to make up that
 
     
 
-     
-    
+<aside class="related-content--wrapper">
+    <h2 class="section-title">관련 글</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/ko/post/leetcode_300/">
         
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[LeetCode] 300. Longest Increasing Subsequence</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/ko/post/leetcode_322/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[LeetCode] 322. Coin Change</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
     
 
     <footer class="site-footer">
